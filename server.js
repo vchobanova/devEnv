@@ -20,16 +20,19 @@ app.use(session({
     cookie: {httpOnly: true}}));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({"extended":true}));
-
-
+app.use("/public", express.static("public"));
 
 
 /***********************Modules**********************/
 const user = require(__dirname + "/routes/user.js");
+const movie = require(__dirname + "/routes/movie.js");
+const tvprogram = require(__dirname + "/routes/tvprogram.js");
 /****************************************************/
 
 /***********************Routes***********************/
 app.use("/account", user);
+app.use("/movie", movie);
+app.use("/tv-program", tvprogram);
 /****************************************************/
 
 

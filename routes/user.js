@@ -57,6 +57,7 @@ router.post("/login", function(req, res, next){
                     return res.send(JSON.stringify({response: "Username or password is incorrect"}));
                 } else {
                     console.log(jData[0]);
+                    req.session.isLoggedIn = true;
                     req.session.user_uid = jData[0].user_uid;
                     req.session.name = jData[0].name;
                     req.session.user_role = jData[0].user_role_name;
@@ -72,4 +73,9 @@ router.post("/login", function(req, res, next){
     });
 });
 
+router.get("/logout", function(req, res, next){
+    req.session.destroy();
+    res.status(200);
+    return res.send(JSON.stringify({response: "Successfully logged out!"}));
+});
 module.exports = router;
