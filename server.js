@@ -51,7 +51,7 @@ app.get("/", (req, res) => {
     res.send( sTopHtml + sMainHtml + sBottomHtml );
     res.end();
 });
-
+/***********************Views***********************/
 app.get("/home", (req, res) => {
     var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
     var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
@@ -69,6 +69,24 @@ app.get("/home", (req, res) => {
     res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
     res.end();
 });
+
+app.get("/register", (req, res) => {
+    var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+    var sMainHtml = fs.readFileSync( __dirname + '/views/register.html', 'utf8' );
+    var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
+
+    //replace placeholders
+    sTopHtml = sTopHtml.replace('{{title}}','Netflix 2.0');
+    sTopHtml = sTopHtml.replace('{{active-home}}',' active');
+    sTopHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/register.css">');
+    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>');
+    res.send( sTopHtml + sMainHtml + sBottomHtml );
+    res.end();
+});
+
+
+
 
 app.listen(8080, (err) => {
     if(err) return err;
