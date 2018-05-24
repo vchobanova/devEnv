@@ -1,4 +1,9 @@
 $('#loginbtn').click(function(){
-  console.log('hhe')
-  window.location.href = "/home";
+  var data = $('#form-signin').serialize();
+  console.log(data)
+  $.post('/account/login', data).done(function(){
+    console.log('User found')
+    window.location.href = "/home";
+  })
 })
+

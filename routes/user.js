@@ -19,6 +19,7 @@ router.post("/register", function(req, res, next){
     var pwSalt = hashResult.salt;
     var pwHashSalt = hashResult.data.pwHash;
 
+
     var sp = "call AddUpdateUser(?, ?, ?, ?, ?, ?)";
     dbController.query(sp, [user_uid, email, name, pwSalt, pwHashSalt, role], (err, jData) => {
         if(err){
@@ -31,6 +32,7 @@ router.post("/register", function(req, res, next){
             return res.send(JSON.stringify({response: "Successfully registered!"}));
         }
     });
+    
 });
 
 router.post("/login", function(req, res, next){
@@ -50,7 +52,7 @@ router.post("/login", function(req, res, next){
             if(jData.length > 0){
                 var dbSalt = jData[0].password_salt;
                 var dbHash = jData[0].password;
-    
+                console.log(password)
                 var jResult = hasher.verifyPw(password, dbSalt, dbHash);
                 if(jResult.status == false){
                     res.status(401);
