@@ -52,7 +52,21 @@ app.get("/", (req, res) => {
     res.end();
 });
 /***********************Views***********************/
+app.get("/home", (req, res) => {
+    var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+    var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
+    var sMainHtml = fs.readFileSync( __dirname + '/views/home.html', 'utf8' );
+    var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+    var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
 
+    //replace placeholders
+    sTopHtml = sTopHtml.replace('{{title}}','Home page');
+    sTopHtml = sTopHtml.replace('{{active-home}}',' active');
+    sTopHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/home.js"></script>');
+    res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    res.end();
+});
 
 app.get("/register", (req, res) => {
     var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
