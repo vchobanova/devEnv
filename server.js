@@ -61,8 +61,10 @@ app.get("/home", (req, res) => {
 
     //replace placeholders
     sTopHtml = sTopHtml.replace('{{title}}','Home page');
-    sTopHtml = sTopHtml.replace('{{active-home}}',' active');
-    sTopHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+    sTopHtml = sTopHtml.replace('{{customcss}}', '');
+    //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
+    //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+
     sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/home.js"></script>');
     res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
     res.end();
