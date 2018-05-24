@@ -52,20 +52,23 @@ app.get("/", (req, res) => {
     res.end();
 });
 /***********************Views***********************/
-app.get("/", (req, res) => {
+
+
+app.get("/register", (req, res) => {
     var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
-    var sMainHtml = fs.readFileSync( __dirname + '/views/login.html', 'utf8' );
+    var sMainHtml = fs.readFileSync( __dirname + '/views/register.html', 'utf8' );
     var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
 
     //replace placeholders
-    sTopHtml = sTopHtml.replace('{{title}}','Login page');
-
-    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>' +
-        '<script src="../public/javascript/login.js"></script>' +
-        '<script src="../public/javascript/register.js"></script>');
+    sTopHtml = sTopHtml.replace('{{title}}','Netflix 2.0');
+    sTopHtml = sTopHtml.replace('{{active-home}}',' active');
+    sTopHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/register.css">');
+    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>');
     res.send( sTopHtml + sMainHtml + sBottomHtml );
     res.end();
 });
+
 
 
 
