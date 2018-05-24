@@ -37,25 +37,37 @@ router.post("/login", function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
 
-    var sQuery = "SELECT * FROM user WHERE email = ?";
+    var sQuery = "SELECT u.user_uid, u.email, u.name, u.password_salt, u.password, ur.user_role_name FROM user AS u" + 
+                 " JOIN user_role as ur" + 
+                 " ON u.user_role_uid = ur.user_role_uid"
+                 " WHERE email = ?";
     dbController.query(sQuery, [email], (err, jData) => {
         if(err){
             console.log(jData);
             res.status(500);
             res.send(JSON.stringify({response: "Something went wrong!"}))
         } else {
-            var dbSalt = jData[0].password_salt;
-            var dbHash = jData[0].password;
-
-            var jResult = hasher.verifyPw(password, dbSalt, dbHash);
-            if(jResult.status == false){
-                res.status(401);
-                return res.send(JSON.stringify({response: "Username or password is incorrect"}));
+            if(jData.length > 0){
+                var dbSalt = jData[0].password_salt;
+                var dbHash = jData[0].password;
+    
+                var jResult = hasher.verifyPw(password, dbSalt, dbHash);
+                if(jResult.status == false){
+                    res.status(401);
+                    return res.send(JSON.stringify({response: "Username or password is incorrect"}));
+                } else {
+                    console.log(jData[0]);
+                    req.session.user_uid = jData[0].user_uid;
+                    req.session.name = jData[0].name;
+                    req.session.user_role = jData[0].user_role_name;
+                    res.status(200);
+                    return res.send(req.session);
+                }
             } else {
-                req.session.isLoggedIn = true;
-                req.session.user_uid = jData[0].user_uid;
-                req.session.email = jData[0].email;
+                res.status(401);
+                res.send(JSON.stringify({response: "User not found!"}))
             }
+          
         }
     });
 });
