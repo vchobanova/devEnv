@@ -28,6 +28,7 @@ console.log("data: ", data);
     for (var i = 0; i < data.length; i++) {
         htmlMovie =   '<div class="movie-card">\
                                 <div class="movie-header">\
+                                <img src="../public/images/posters/'+data[i].poster+'" class="img-fluid img-thumbnail" alt="product">\
                                     <div class="header-icon-container">\
                                     <a href="#">\
                                        <i class="material-icons header-icon"></i>\
@@ -37,7 +38,7 @@ console.log("data: ", data);
                                        <div class="movie-content">\
                                        <div class="movie-content-header">\
                                        <a href="#">\
-                                       <h3 class="movie-title">Man of Steel</h3>\
+                                       <h3 class="movie-title">'+data[i].title+'</h3>\
                                        </a>\
                                        <div class="imax-logo"></div>\
                                        </div>\
