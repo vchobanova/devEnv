@@ -11,12 +11,12 @@ var app = express();
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1); // trust first proxy
     sess.cookie.secure = true // serve secure cookies
-  }
+}
 app.use(cookieParser());
 //to-do set cookie: {secure: true} when u implement https
-app.use(session({ 
-    "secret": sessionSecret, 
-    "saveUninitialized":false, 
+app.use(session({
+    "secret": sessionSecret,
+    "saveUninitialized":false,
     "resave":false,
     cookie: {httpOnly: true}}));
 app.use(body_parser.json());
