@@ -126,6 +126,9 @@ a:hover {
 .movie-content {
     padding: 18px 18px 24px 18px;
     margin: 0;
+    background-color: white;
+    z-index: 9999;
+    position: relative;
 }
 
 .movie-content-header, .movie-info {
