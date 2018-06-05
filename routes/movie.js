@@ -47,4 +47,32 @@ router.get("/:movieNo", function(req,res,next){
 
 });
 
+
+/************************ Get video comments ************************/
+router.get("/:movieNo/comments", function(req, res, next){
+
+    var movieNo = req.params.movieNo;
+
+    //
+    // var sQuery = "SELECT c.comment, c.date_time_posted, u.email FROM video AS v" +
+    //     " JOIN comment AS c ON v.video_uid = c.video_uid" +
+    //     " JOIN user AS u ON c.user_uid = u.user_uid" +
+    //     " WHERE c.video_uid = ?";
+    //
+    var sQuery = "SELECT c.comment, c.date_time_posted, u.email FROM video AS v" +
+        " JOIN comment AS c ON v.video_uid = c.video_uid" +
+        " JOIN user AS u" +
+        " WHERE c.video_uid = ?";
+    dbController.query(sQuery, [movieNo], (err, jData) => {
+        if(err){
+            console.log("err",err);
+            return res.send(err);
+        }
+        console.log(jData);
+        return res.send(jData);
+    });
+});
+
+
+
 module.exports = router;

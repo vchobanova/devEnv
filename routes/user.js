@@ -80,4 +80,24 @@ router.get("/logout", function(req, res, next){
     res.status(200);
     return res.send(JSON.stringify({response: "Successfully logged out!"}));
 });
+
+router.post("/comment", function(req, res, next){
+
+    var commentNo = null;
+    var user_uid = req.body.userNo;
+    var comment = req.body.comment;
+    var video_uid = req.body.movieId;
+    var sp = "call AddUpdateComment(?, ?, ?, ?)";
+    dbController.query(sp, [commentNo, comment, user_uid, video_uid], (err, jData) => {
+        console.log("jData: ", jData);
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+
+        console.log(jData);
+        return res.send(jData);
+    });
+
+});
 module.exports = router;
