@@ -11,10 +11,10 @@ const hasher = require("../helpers/hasher.js");
 
 router.get("/", function(req, res, next){
     console.log(req.session);
-    if(req.session != null & req.session.isLoggedIn == true){
+    // if(req.session != null & req.session.isLoggedIn == true){
         var sQuery = "SELECT * FROM video WHERE type = ?";
         var type = "TvProgram";
-        dbController.query(sQuery, [TvProgram], (err, jData)=> {
+        dbController.query(sQuery, [type], (err, jData)=> {
             if(err){
                 console.log(jData);
                 res.status(500);
@@ -24,10 +24,10 @@ router.get("/", function(req, res, next){
                 return res.send(jData);
             }
         });
-    } else {
-        res.status(401);
-        return res.send(JSON.stringify({response: "You need to be logged in!"}));
-    }
+    // } else {
+    //     res.status(401);
+    //     return res.send(JSON.stringify({response: "You need to be logged in!"}));
+    // }
 });
 
 

@@ -30,6 +30,21 @@ router.get("/", function(req, res, next){
     // }
 });
 
+// Get a specific movie by movie id
+router.get("/:movieNo", function(req,res,next){
 
+    var movieNo = req.params.movieNo;
+    var sQuery = "select * from video WHERE video_uid = ?";
+
+    dbController.query(sQuery, [movieNo], (err, sjData) => {
+        if(err){
+            console.log(err);
+            return res.send(JSON.stringify(err));
+        }
+        console.log(sjData);
+        return res.send(sjData);
+    });
+
+});
 
 module.exports = router;
