@@ -43,6 +43,8 @@ $(function() {
 
         console.log("ended");
     });
+
+    getRating();
 });
 
 function showVideo(data) {
@@ -165,3 +167,23 @@ function addComment() {
         });
     });
 }
+
+// ratings 
+const ratings = {
+    harrypotter: 2.8,
+}
+
+const starsTotal = 5;
+
+
+function getRating() {
+    for(let rating in ratings){
+        console.log(ratings[rating]);
+        const starPercentage = (ratings[rating] / starsTotal * 100);
+        console.log(starPercentage);
+        const startPercentageRounded = `${Math.round(starPercentage/10)*10}%`;
+        console.log(startPercentageRounded)
+        document.querySelector(`.${rating} .stars-inner`).style.width = startPercentageRounded;
+    }
+}
+

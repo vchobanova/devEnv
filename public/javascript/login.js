@@ -6,4 +6,3 @@ $('#loginbtn').click(function(){
     window.location.href = "/home";
   })
 })
-
