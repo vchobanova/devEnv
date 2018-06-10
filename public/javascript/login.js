@@ -7,7 +7,9 @@ $('#loginbtn').click(function(){
   $.post("/account/login", oFrm, function(data){
     console.log(data);
   }).done(function(data){
-    window.location.href = "/home";
+    console.log("data: ", data);
+      localStorage.setItem("cookie", data);
+      window.location.href = "/home";
   }).fail(function(data){
       console.log(data);
   });

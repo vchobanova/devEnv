@@ -38,7 +38,7 @@ console.log("data: ", data);
                             </div>\
                             <div class="movie-content">\
                                 <div class="movie-content-header">\
-                                    <a href="#">\
+                                    <a href="/single-video/'+ data[i].video_uid+'">\
                                     <h3 class="movie-title">' + data[i].title + '</h3>\
                                     </a>\
                                 </div>\

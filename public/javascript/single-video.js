@@ -5,31 +5,34 @@ var movieId = url.substring(url.lastIndexOf('/') + 1);
 $(function() {
 
     //get video
-    $.get( '/movie/' + movieId , function( data ){
+    $.get( '/tv/single-video/' + movieId , function( data ){
 
     }).done(function( data ) {
         // TO DO ON DONE
 
-        //console.log("Success");
+        console.log("Success");
+        console.log("data", data);
+
         showVideo(data);
     }).fail(function(data, textStatus, xhr) {
         //This shows status code eg. 403
-        //console.log("error", data.status);
+        console.log("error", data.status);
         //This shows status message eg. Forbidden
-        //console.log("STATUS: "+xhr);
+        console.log("STATUS: "+xhr);
 
     }).always(function() {
         //TO-DO after fail/done request.
 
-        // console.log("ended");
+         console.log("ended");
     });
 
     //get video comments
-    $.get( '/movie/' + movieId + "/comments" , function( data ){
+    $.get( '/tv/single-video/' + movieId + "/comments" , function( data ){
 
     }).done(function( data ) {
         // TO DO ON DONE
         console.log("Success");
+        console.log("data", data);
         showComments(data);
 
     }).fail(function(data, textStatus, xhr) {
@@ -112,9 +115,9 @@ console.log("comments data: ", data);
 function addComment() {
     $("#btnCommentSubmit").click(function() {
         var sCookie = localStorage.getItem("cookie");
-        console.log("sCookie: ", sCookie);
-        var jCookie = JSON.parse(sCookie);
 
+        var jCookie = JSON.parse(sCookie);
+        console.log("jCookie: ", sCookie);
         var txtComment = $("textarea#txtComment").val();
         var sjComment = {"comment":txtComment,"userNo": jCookie.userNo, "movieId": movieId};
         console.log(sjComment);
@@ -171,7 +174,7 @@ function addComment() {
 // ratings 
 const ratings = {
     harrypotter: 2.8,
-}
+};
 
 const starsTotal = 5;
 
@@ -182,7 +185,7 @@ function getRating() {
         const starPercentage = (ratings[rating] / starsTotal * 100);
         console.log(starPercentage);
         const startPercentageRounded = `${Math.round(starPercentage/10)*10}%`;
-        console.log(startPercentageRounded)
+        console.log(startPercentageRounded);
         document.querySelector(`.${rating} .stars-inner`).style.width = startPercentageRounded;
     }
 }

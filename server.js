@@ -163,6 +163,22 @@ app.get("/profile", (req, res) => {
     }
 });
 
+app.get("/single-video/:UID", (req, res) => {
+
+    var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+    var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
+    var sMainHtml = fs.readFileSync( __dirname + '/views/single-video.html', 'utf8' );
+    var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+    var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
+
+    sTopHtml = sTopHtml.replace('{{title}}','Single video');
+    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/single-video.js"></script>');
+    res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    res.end();
+
+});
+
 app.listen(8080, (err) => {
     if(err) return err;
     console.log("server has started on port: *8080");
