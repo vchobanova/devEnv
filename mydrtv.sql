@@ -1,153 +1,30 @@
-CREATE DATABASE  IF NOT EXISTS `mydrtv` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `mydrtv`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1    Database: mydrtv
--- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Host: 127.0.0.1
+-- Generation Time: Jun 10, 2018 at 02:58 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comment`
+-- Database: `mydrtv`
 --
 
-DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comment` (
-  `comment_uid` varchar(64) NOT NULL,
-  `coment` text NOT NULL,
-  `date_time_posted` datetime NOT NULL,
-  `user_uid` varchar(64) DEFAULT NULL,
-  `video_uid` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`comment_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
+DELIMITER $$
 --
--- Dumping data for table `comment`
+-- Procedures
 --
-
-LOCK TABLES `comment` WRITE;
-/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `user_uid` varchar(64) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `password_salt` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `user_role_uid` varchar(64) NOT NULL,
-  PRIMARY KEY (`user_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('c5fb8617-5f47-11e8-b069-4ccc6ae28920','johnny@live.dk','Johnny Bravo','3245a5b2b3b3143552278bfc37fe3d05','3b35df944b6faffbae396b375ab9af9225a328ace857e9432d0ed4c470860295dca3643fb92d6e2e00cdc43e739a38e78066ecddbf7630a0c8ae19bf075f432c','4a302ab1-5f3e-11e8-b069-4ccc6ae28920');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_role`
---
-
-DROP TABLE IF EXISTS `user_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_role` (
-  `user_role_uid` varchar(64) NOT NULL,
-  `user_role_name` varchar(64) NOT NULL,
-  PRIMARY KEY (`user_role_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_role`
---
-
-LOCK TABLES `user_role` WRITE;
-/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES ('44ed95ae-5f3e-11e8-b069-4ccc6ae28920','Admin'),('4a302ab1-5f3e-11e8-b069-4ccc6ae28920','Basic');
-/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `video`
---
-
-DROP TABLE IF EXISTS `video`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `video` (
-  `video_uid` varchar(64) NOT NULL,
-  `year_of_production` varchar(50) NOT NULL,
-  `title` varchar(250) NOT NULL,
-  `genre` varchar(250) NOT NULL,
-  `rating` decimal(10,1) NOT NULL,
-  `url` varchar(250) NOT NULL,
-  `type` varchar(250) NOT NULL,
-  `poster` varchar(250) NOT NULL,
-  PRIMARY KEY (`video_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `video`
---
-
-LOCK TABLES `video` WRITE;
-/*!40000 ALTER TABLE `video` DISABLE KEYS */;
-INSERT INTO `video` VALUES ('28050c4f-5f4e-11e8-b069-4ccc6ae28920','2001','Harry Potter and the Philosophers Stone','Fantasy',7.6,'harry-potter-philosopher.mkv','Movie','harrypotterposter.jpg'),('6e1cf3e3-5f4f-11e8-b069-4ccc6ae28920','2017','The Handmaids Tale: Faithful','Drama',8.6,'the-handmaids-tale-faithful.mkv','TvProgram','handmaidstale.jpg');
-/*!40000 ALTER TABLE `video` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping events for database 'mydrtv'
---
-
---
--- Dumping routines for database 'mydrtv'
---
-/*!50003 DROP PROCEDURE IF EXISTS `AddUpdateComment` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`sola`@`localhost` PROCEDURE `AddUpdateComment`(
-IN _comment_uid varchar(64),
-IN _comment TEXT,
-IN _user_uid varchar(64),
-IN _video_uid varchar(64)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUpdateComment`(IN `_comment_uid` VARCHAR(64), IN `_comment` TEXT, IN `_user_uid` VARCHAR(64), IN `_video_uid` VARCHAR(64))
 BEGIN
 	IF _comment_uid IS NULL THEN
     SET _comment_uid = UUID();
@@ -163,31 +40,10 @@ BEGIN
 		WHERE comment_uid = _comment_uid AND user_uid = _user_uid;
     END;
     END IF;
-    SELECT * FROM comment_uid WHERE comment_uid = _comment_uid AND user_uid = _user_uid;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `AddUpdateUser` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`sola`@`localhost` PROCEDURE `AddUpdateUser`(
-IN _user_uid varchar(64),
-IN _email varchar(255),
-IN _name varchar(255),
-IN _password_Salt varchar(50),
-IN _password varchar(255),
-IN _user_role_name varchar(64)
-)
+    SELECT * FROM comment WHERE comment_uid = _comment_uid AND user_uid = _user_uid;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUpdateUser`(IN `_user_uid` VARCHAR(64), IN `_email` VARCHAR(255), IN `_name` VARCHAR(255), IN `_password_Salt` VARCHAR(50), IN `_password` VARCHAR(255), IN `_user_role_name` VARCHAR(64))
 BEGIN
 	IF _user_uid IS NULL THEN
     SET _user_uid = UUID();
@@ -211,32 +67,9 @@ BEGIN
     END;
     END IF;
     SELECT user_uid, email, name, (SELECT user_role_name FROM user_role WHERE user_role_uid = @user_role_uid) AS user_role FROM user WHERE user_uid = _user_uid;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `AddUpdateVideo` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`sola`@`localhost` PROCEDURE `AddUpdateVideo`(
-IN _video_uid varchar(64),
-IN _year_of_production DATE,
-IN _title varchar(250),
-IN _genre  varchar(250),
-IN _rating int,
-IN _url varchar(250),
-IN _type varchar(250),
-IN _poster varchar(250)
-)
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUpdateVideo`(IN `_video_uid` VARCHAR(64), IN `_year_of_production` VARCHAR(50), IN `_title` VARCHAR(250), IN `_genre` VARCHAR(250), IN `_rating` INT, IN `_url` VARCHAR(250), IN `_type` VARCHAR(250), IN `_poster` VARCHAR(250))
 BEGIN
 	IF _video_uid IS NULL THEN
     SET _video_uid = UUID();
@@ -257,20 +90,115 @@ BEGIN
     END;
     END IF;
     SELECT * FROM video WHERE video_uid = _video_uid;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+END$$
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment`
+--
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `comment_uid` varchar(64) NOT NULL,
+  `comment` text NOT NULL,
+  `date_time_posted` datetime NOT NULL,
+  `user_uid` varchar(64) DEFAULT NULL,
+  `video_uid` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`comment_uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`comment_uid`, `comment`, `date_time_posted`, `user_uid`, `video_uid`) VALUES
+('1e0ae851-6cad-11e8-a576-005056c00001', 'sup', '2018-06-10 14:51:52', 'd7038148-6ca4-11e8-a576-005056c00001', '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('6102533d-6cad-11e8-a576-005056c00001', 'hey', '2018-06-10 14:53:44', 'd7038148-6ca4-11e8-a576-005056c00001', '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('b278223c-6cac-11e8-a576-005056c00001', 'hey', '2018-06-10 14:48:51', NULL, '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('be233311-6ca9-11e8-a576-005056c00001', 'hey', '2018-06-10 14:27:42', 'a94518e6-5b8e-11e8-9f1d-005056825f2d', '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('e2da6210-6ca9-11e8-a576-005056c00001', 'hey', '2018-06-10 14:28:44', 'a94518e6-5b8e-11e8-9f1d-005056825f2d', '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('fd38ecd2-6ca9-11e8-a576-005056c00001', 'amazing movie! ', '2018-06-10 14:29:28', 'a94518e6-5b8e-11e8-9f1d-005056825f2d', '28050c4f-5f4e-11e8-b069-4ccc6ae28920'),
+('ff9b9ca9-6cac-11e8-a576-005056c00001', 'hey', '2018-06-10 14:51:01', 'd7038148-6ca4-11e8-a576-005056c00001', '28050c4f-5f4e-11e8-b069-4ccc6ae28920');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_uid` varchar(64) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password_salt` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `user_role_uid` varchar(64) NOT NULL,
+  PRIMARY KEY (`user_uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_uid`, `email`, `name`, `password_salt`, `password`, `user_role_uid`) VALUES
+('c5fb8617-5f47-11e8-b069-4ccc6ae28920', 'johnny@live.dk', 'Johnny Bravo', '3245a5b2b3b3143552278bfc37fe3d05', '3b35df944b6faffbae396b375ab9af9225a328ace857e9432d0ed4c470860295dca3643fb92d6e2e00cdc43e739a38e78066ecddbf7630a0c8ae19bf075f432c', '4a302ab1-5f3e-11e8-b069-4ccc6ae28920'),
+('d7038148-6ca4-11e8-a576-005056c00001', 'test@me.com', 'Vasilena Chobanova', '2d70647bc5e7c1379e18348e097fb5a4', 'abbe5418faa775cb5e615ded2c4ce5ef584f2f0619d7577323f45d5b03dc7ce4245013dccd056297a56d8d33a43354d8c1b858fb20cc58a68cfaf639ca2c1e4b', '4a302ab1-5f3e-11e8-b069-4ccc6ae28920');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_role`
+--
+
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `user_role_uid` varchar(64) NOT NULL,
+  `user_role_name` varchar(64) NOT NULL,
+  PRIMARY KEY (`user_role_uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_role`
+--
+
+INSERT INTO `user_role` (`user_role_uid`, `user_role_name`) VALUES
+('44ed95ae-5f3e-11e8-b069-4ccc6ae28920', 'Admin'),
+('4a302ab1-5f3e-11e8-b069-4ccc6ae28920', 'Basic');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video`
+--
+
+CREATE TABLE IF NOT EXISTS `video` (
+  `video_uid` varchar(64) NOT NULL,
+  `year_of_production` varchar(50) NOT NULL,
+  `title` varchar(250) NOT NULL,
+  `genre` varchar(250) NOT NULL,
+  `rating` decimal(10,1) NOT NULL,
+  `url` varchar(250) NOT NULL,
+  `type` varchar(250) NOT NULL,
+  `poster` varchar(250) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`video_uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `video`
+--
+
+INSERT INTO `video` (`video_uid`, `year_of_production`, `title`, `genre`, `rating`, `url`, `type`, `poster`, `date_added`) VALUES
+('25ce9306-6b5a-11e8-bf69-4ccc6ae28920', '2001', 'Monsters, Inc.', 'Animation', '8.1', 'test', 'Movie', 'monstersincposter.jpg', '2018-06-08 22:25:23'),
+('28050c4f-5f4e-11e8-b069-4ccc6ae28920', '2001', 'Harry Potter and the Philosophers Stone', 'Fantasy', '7.6', 'harry-potter-philosopher.mkv', 'Movie', 'harrypotterposter.jpg', '2018-05-07 00:23:48'),
+('2f714d92-6b5e-11e8-bf69-4ccc6ae28920', '2013', 'Frozen', 'Animation', '7.5', 'test', 'Movie', 'frozenposter.jpg', '2018-06-08 22:54:12'),
+('6d170443-6a33-11e8-84dc-4ccc6ae28920', '2016', 'Deadpool', 'Action', '8.0', 'test', 'Movie', 'deadpoolposter.jpg', '2018-06-07 11:16:08'),
+('6e1cf3e3-5f4f-11e8-b069-4ccc6ae28920', '2017 -', 'The Handmaids Tale: Faithful', 'Drama', '8.6', 'the-handmaids-tale-faithful.mkv', 'TvProgram', 'handmaidstale.jpg', '2018-06-07 00:23:48'),
+('7a5dedd2-6a37-11e8-84dc-4ccc6ae28920', '2016', 'Moana', 'Animation', '7.6', 'test', 'Movie', 'moanaposter.jpg', '2018-06-07 11:45:08'),
+('a19c80bf-6a38-11e8-84dc-4ccc6ae28920', '2016', 'Arrival', 'Sci-Fi', '7.9', 'test', 'Movie', 'arrivalposter.jpg', '2018-06-07 11:53:24'),
+('df905136-6a37-11e8-84dc-4ccc6ae28920', '2013 -', 'Orange Is the New Black', 'Comedy', '8.2', 'test', 'TvProgram', 'orangeisthenewblackposter.jpg', '2018-06-07 11:47:58');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-05-24 14:42:29
