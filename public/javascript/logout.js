@@ -3,6 +3,7 @@ $("#btnLogOut").click(function() {
 
     }).done(function(data){
         window.location.href = "/";
+        localStorage.clear();
     }).fail(function(data){
         console.log(data);
     });
