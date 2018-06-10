@@ -8,6 +8,7 @@ $('#loginbtn').click(function(){
     console.log(data);
   }).done(function(data){
     console.log("data: ", data);
+
       localStorage.setItem("cookie", data);
       window.location.href = "/home";
   }).fail(function(data){

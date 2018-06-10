@@ -61,8 +61,9 @@ router.post("/login", function(req, res, next){
                     req.session.user_uid = jData[0].user_uid;
                     req.session.name = jData[0].name;
                     req.session.user_role = jData[0].user_role_name;
+                    req.session.email = jData[0].email;
                     res.status(200);
-                    return res.send(req.session);
+                    return res.send(JSON.stringify(req.session));
                 }
             } else {
                 res.status(401);

@@ -32,7 +32,7 @@ $(function() {
     }).done(function( data ) {
         // TO DO ON DONE
         console.log("Success");
-        console.log("data", data);
+        console.log("data comments", data);
         showComments(data);
 
     }).fail(function(data, textStatus, xhr) {
@@ -115,11 +115,11 @@ console.log("comments data: ", data);
 function addComment() {
     $("#btnCommentSubmit").click(function() {
         var sCookie = localStorage.getItem("cookie");
-
+        console.log("sCookie: ", sCookie);
         var jCookie = JSON.parse(sCookie);
-        console.log("jCookie: ", sCookie);
+
         var txtComment = $("textarea#txtComment").val();
-        var sjComment = {"comment":txtComment,"userNo": jCookie.userNo, "movieId": movieId};
+        var sjComment = {"comment":txtComment,"userNo": jCookie.user_uid, "movieId": movieId};
         console.log(sjComment);
 
         $.post( '/account/comment' , sjComment , function( data ){
