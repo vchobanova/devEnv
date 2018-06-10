@@ -17,22 +17,7 @@ $(function() {
         //TO-DO after fail/done request.
         //console.log("ended");
     });
-    $.get( '/tv-program' , function( data ){
-    }).done(function( data ) {
-        // TO DO ON DONE
-        //console.log("data: ", data);
-        //console.log("Success");
-        showTv(data);
 
-    }).fail(function(data, textStatus, xhr) {
-        //This shows status code eg. 403
-        //console.log("error", data.status);
-        //This shows status message eg. Forbidden
-        //console.log("STATUS: "+xhr);
-    }).always(function() {
-        //TO-DO after fail/done request.
-        //console.log("ended");
-    });
 });
 
 function showMovies(data) {
