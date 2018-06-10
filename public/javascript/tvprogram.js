@@ -1,28 +1,11 @@
-// Wait for the DOM to be ready
 $(function() {
 
-    $.get( '/tv' , function( data ){
-    }).done(function( data ) {
-        // TO DO ON DONE
-        //console.log("data: ", data);
-        //console.log("Success");
-        showMovies(data);
-
-    }).fail(function(data, textStatus, xhr) {
-        //This shows status code eg. 403
-        //console.log("error", data.status);
-        //This shows status message eg. Forbidden
-        //console.log("STATUS: "+xhr);
-    }).always(function() {
-        //TO-DO after fail/done request.
-        //console.log("ended");
-    });
     $.get( '/tv-program' , function( data ){
     }).done(function( data ) {
         // TO DO ON DONE
         //console.log("data: ", data);
         //console.log("Success");
-        showTv(data);
+        showMovies(data);
 
     }).fail(function(data, textStatus, xhr) {
         //This shows status code eg. 403
@@ -62,9 +45,9 @@ console.log("data: ", data);
                                         <label>Year</label>\
                                         <span>' + data[i].year_of_production + '</span>\
                                     </div>\
-                                    <div class="info-section genre">\
+                                    <div class="info-section">\
                                         <label>Genre</label>\
-                                        <span data-genre="' + data[i].genre + '">' + data[i].genre + '</span>\
+                                        <span>' + data[i].genre + '</span>\
                                     </div>\
                                     <div class="info-section rating">\
                                         <label>Rating</label>\
@@ -73,6 +56,7 @@ console.log("data: ", data);
                                 </div>\
                             </div>\
                         </div>';
+        
         htmlMovies += htmlMovie;
        
     }
@@ -88,7 +72,7 @@ console.log("data: ", data);
             }
         });
         $("#btnTitleAsc").click(function() {
-            var $divs = $("div.movie-card");
+            var $divs = $("div.movie-card")
             var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
                 return $(a).find("h3").text() > $(b).find("h3").text();
             });
@@ -96,7 +80,7 @@ console.log("data: ", data);
         });
 
         $("#btnTitleDesc").click(function() {
-            var $divs = $("div.movie-card");
+            var $divs = $("div.movie-card")
             var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
                 return $(a).find("h3").text() < $(b).find("h3").text();
             });
@@ -105,7 +89,7 @@ console.log("data: ", data);
         
         
         $("#btnRating").click(function() {
-            var $divs = $("div.movie-card");
+            var $divs = $("div.movie-card")
             var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
                 return $(a).find(".rating span").text() < $(b).find(".rating span").text();
             });
@@ -114,29 +98,28 @@ console.log("data: ", data);
 
             
         $("#btnYear").click(function() {
-            var $divs = $("div.movie-card");
+            var $divs = $("div.movie-card")
             var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
                 return $(a).find(".year span").text() < $(b).find(".year span").text();
             });
             $("#lblMovieList").html(alphabeticallyOrderedDivs);
         });
-
-     
         sortGenre();
+    
 }
 
 function  sortGenre() {
     $("#frmRadio input").on("change", function() {
         var genre = $('input[name=options]:checked', '#frmRadio').val();
         if(genre == "All"){
-            $.get( '/tv' , function( data ){
+            $.get( '/tv-program' , function( data ){
             }).done(function( data ) {
                 showMovies(data);
             }).fail(function(data, textStatus, xhr) {
             }).always(function() {
             }); 
         } else {
-            $.get("/tv/" + genre, function(data){
+            $.get("/tv-program/" + genre, function(data){
                 console.log(data);
             }).done(function(data){
                 showMovies(data);
@@ -145,5 +128,4 @@ function  sortGenre() {
         }      
     });
 }
-
-$("#btnHome").addClass("active");
+$("#btnPrograms").addClass("active");

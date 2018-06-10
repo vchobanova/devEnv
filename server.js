@@ -28,12 +28,14 @@ app.use("/public", express.static("public"));
 const user = require(__dirname + "/routes/user.js");
 const movie = require(__dirname + "/routes/movie.js");
 const tvprogram = require(__dirname + "/routes/tvprogram.js");
+const general = require(__dirname + "/routes/general.js");
 /****************************************************/
 
 /***********************Routes***********************/
 app.use("/account", user);
 app.use("/movie", movie);
 app.use("/tv-program", tvprogram);
+app.use("/tv", general);
 /****************************************************/
 
 /***********************Views***********************/
@@ -53,20 +55,27 @@ app.get("/", (req, res) => {
 });
 /***********************Views***********************/
 app.get("/home", (req, res) => {
-    var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
-    var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
-    var sMainHtml = fs.readFileSync( __dirname + '/views/home.html', 'utf8' );
-    var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
-    var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
+    if(req.session != null & req.session.isLoggedIn == true){
+        var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+        var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
+        var sMainHtml = fs.readFileSync( __dirname + '/views/home.html', 'utf8' );
+        var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+        var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
 
-    //replace placeholders
-    sTopHtml = sTopHtml.replace('{{title}}','Home page');
-    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
-    //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
-    //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
-    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/home.js"></script>, ');
-    res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
-    res.end();
+        //replace placeholders
+        sTopHtml = sTopHtml.replace('{{title}}','Home page');
+        sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+        //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
+        //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+        sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/home.js"></script>'+ 
+        '<script src="../public/javascript/searchGeneral.js"></script>' + '<script src="../public/javascript/logout.js"></script>');
+        res.status(200);
+        return res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    } else {
+        res.status(401);
+        return res.redirect("/");
+    }
+
 });
 
 app.get("/register", (req, res) => {
@@ -84,22 +93,75 @@ app.get("/register", (req, res) => {
     res.end();
 });
 
-app.get("/single-video/:UID", (req, res) => {
+app.get("/movies", (req, res) => {
+    if(req.session != null & req.session.isLoggedIn == true){
+        var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+        var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
+        var sMainHtml = fs.readFileSync( __dirname + '/views/movie.html', 'utf8' );
+        var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+        var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
 
-    var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
-    var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
-    var sMainHtml = fs.readFileSync( __dirname + '/views/single-video.html', 'utf8' );
-    var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
-    var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
-
-    sTopHtml = sTopHtml.replace('{{title}}','Single video');
-    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">' + '<link rel="stylesheet" href="../public/css/single-video.css">' + '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">');
-    sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/single-video.js"></script>');
-    res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
-    res.end();
-
+        //replace placeholders
+        sTopHtml = sTopHtml.replace('{{title}}','Movies');
+        sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+        //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
+        //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+        sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/movies.js"></script>' + 
+        '<script src="../public/javascript/searchMovies.js"></script>' + '<script src="../public/javascript/logout.js"></script>');
+        res.status(200);
+        return res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    } else {
+        res.status(401);
+        return res.redirect("/");
+    }
 });
 
+app.get("/tv-programs", (req, res) => {
+    if(req.session != null & req.session.isLoggedIn == true){
+        var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+        var sNavHtml = fs.readFileSync( __dirname + '/public/components/nav.html', 'utf8' );
+        var sMainHtml = fs.readFileSync( __dirname + '/views/tvprogram.html', 'utf8' );
+        var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+        var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
+
+        //replace placeholders
+        sTopHtml = sTopHtml.replace('{{title}}','Tv-programs');
+        sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+        //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
+        //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+        sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/tvprogram.js"></script>' +
+        '<script src="../public/javascript/searchTvProgram.js"></script>' + '<script src="../public/javascript/logout.js"></script>');
+        res.status(200);
+        return res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    } else {
+        res.status(401);
+        return res.redirect("/");
+    }
+});
+
+app.get("/profile", (req, res) => {
+    if(req.session != null & req.session.isLoggedIn == true){
+        var sTopHtml = fs.readFileSync( __dirname + '/public/components/top.html', 'utf8' );
+        var sNavHtml = fs.readFileSync( __dirname + '/public/components/navuser.html', 'utf8' );
+        var sMainHtml = fs.readFileSync( __dirname + '/views/profile.html', 'utf8' );
+        var sFooterHtml = fs.readFileSync( __dirname + '/public/components/footer.html', 'utf8' );
+        var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
+
+        //replace placeholders
+        sTopHtml = sTopHtml.replace('{{title}}','Profile');
+        sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+        sMainHtml = sMainHtml.replace("{{user}}", req.session.name);
+        //sNavHtml = sTopHtml.replace('{{active-home}}',' active');
+        //sNavHtml = sTopHtml.replace(/{{active-.*}}/g ,'');
+        sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/profile.js"></script>' +
+         '<script src="../public/javascript/logout.js"></script>');
+        res.status(200);
+        return res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
+    } else {
+        res.status(401);
+        return res.redirect("/");
+    }
+});
 
 app.listen(8080, (err) => {
     if(err) return err;

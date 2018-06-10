@@ -16,7 +16,7 @@ dbController.query = (sQuery, params, fCallback) => {
                     }
                     jResult = JSON.stringify(jData);
                     connection.release();
-                    return fCallback(false, jData); 
+                    return fCallback(false, jData);
                 });
             } else {
                 connection.query(sQuery, (err, jData) => {
@@ -26,10 +26,10 @@ dbController.query = (sQuery, params, fCallback) => {
                     }
                     jResult = JSON.stringify(jData);
                     connection.release();
-                    return fCallback(false, jData); 
+                    return fCallback(false, jData);
                 });
             }
-        }      
+        }
     });
 }
 module.exports = dbController;

@@ -1,8 +1,15 @@
 $('#loginbtn').click(function(){
-  var data = $('#form-signin').serialize();
-  console.log(data)
-  $.post('/account/login', data).done(function(){
-    console.log('User found')
+
+  var frm = $("#frmLogin");
+  var oFrm = frm.serialize();
+  console.log(oFrm );
+
+  $.post("/account/login", oFrm, function(data){
+    console.log(data);
+  }).done(function(data){
     window.location.href = "/home";
-  })
-})
+  }).fail(function(data){
+      console.log(data);
+  });
+  
+});
