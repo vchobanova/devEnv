@@ -172,7 +172,8 @@ app.get("/single-video/:UID", (req, res) => {
     var sBottomHtml = fs.readFileSync( __dirname + '/public/components/bottom.html', 'utf8' );
 
     sTopHtml = sTopHtml.replace('{{title}}','Single video');
-    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">');
+    sTopHtml = sTopHtml.replace('{{customcss}}', '<link rel="stylesheet" href="../public/css/menu.css">' + '<link rel="stylesheet" href="../public/css/single-video.css">' + '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">'); 
+
     sBottomHtml = sBottomHtml.replace('{{customScript}}',  '<script src="../public/javascript/single-video.js"></script>');
     res.send( sTopHtml + sNavHtml + sMainHtml + sFooterHtml + sBottomHtml );
     res.end();
